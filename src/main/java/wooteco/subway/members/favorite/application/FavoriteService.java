@@ -1,6 +1,13 @@
 package wooteco.subway.members.favorite.application;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import wooteco.subway.maps.station.application.StationService;
 import wooteco.subway.maps.station.domain.Station;
 import wooteco.subway.maps.station.dto.StationResponse;
@@ -9,12 +16,6 @@ import wooteco.subway.members.favorite.domain.FavoriteRepository;
 import wooteco.subway.members.favorite.dto.FavoriteRequest;
 import wooteco.subway.members.favorite.dto.FavoriteResponse;
 import wooteco.subway.members.member.domain.LoginMember;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -37,11 +38,11 @@ public class FavoriteService {
         Map<Long, Station> stations = extractStations(favorites);
 
         return favorites.stream()
-                .map(it -> FavoriteResponse.of(
-                        it,
-                        StationResponse.of(stations.get(it.getSourceStationId())),
-                        StationResponse.of(stations.get(it.getTargetStationId()))))
-                .collect(Collectors.toList());
+            .map(it -> FavoriteResponse.of(
+                it,
+                StationResponse.of(stations.get(it.getSourceStationId())),
+                StationResponse.of(stations.get(it.getTargetStationId()))))
+            .collect(Collectors.toList());
     }
 
     public void deleteFavorite(LoginMember loginMember, Long id) {

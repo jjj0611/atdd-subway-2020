@@ -1,24 +1,25 @@
 package wooteco.subway.maps.map.acceptance;
 
-import io.restassured.RestAssured;
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
+import static org.hamcrest.Matchers.*;
+import static wooteco.subway.maps.line.acceptance.step.LineStationAcceptanceStep.*;
+
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+
+import io.restassured.RestAssured;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import wooteco.subway.common.acceptance.AcceptanceTest;
 import wooteco.subway.maps.line.acceptance.step.LineAcceptanceStep;
 import wooteco.subway.maps.line.dto.LineResponse;
 import wooteco.subway.maps.map.acceptance.step.MapAcceptanceStep;
 import wooteco.subway.maps.station.acceptance.step.StationAcceptanceStep;
 import wooteco.subway.maps.station.dto.StationResponse;
-
-import java.util.Arrays;
-
-import static org.hamcrest.Matchers.notNullValue;
-import static wooteco.subway.maps.line.acceptance.step.LineStationAcceptanceStep.지하철_노선에_지하철역_등록되어_있음;
 
 @DisplayName("지하철 노선에 역 등록 관련 기능")
 public class MapAcceptanceTest extends AcceptanceTest {
@@ -83,15 +84,15 @@ public class MapAcceptanceTest extends AcceptanceTest {
 
         String eTag = response.header("ETag");
         RestAssured.given().log().all().
-                header("If-None-Match", eTag).
-                accept(MediaType.APPLICATION_JSON_VALUE).
-                when().
-                get("/maps").
-                then().
-                statusCode(HttpStatus.NOT_MODIFIED.value()).
-                header("ETag", notNullValue()).
-                log().all().
-                extract();
+            header("If-None-Match", eTag).
+            accept(MediaType.APPLICATION_JSON_VALUE).
+            when().
+            get("/maps").
+            then().
+            statusCode(HttpStatus.NOT_MODIFIED.value()).
+            header("ETag", notNullValue()).
+            log().all().
+            extract();
     }
 
     private Long 지하철_노선_등록되어_있음(String name, String color) {

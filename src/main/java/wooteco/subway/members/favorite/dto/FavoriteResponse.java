@@ -1,7 +1,7 @@
 package wooteco.subway.members.favorite.dto;
 
-import wooteco.subway.members.favorite.domain.Favorite;
 import wooteco.subway.maps.station.dto.StationResponse;
+import wooteco.subway.members.favorite.domain.Favorite;
 
 public class FavoriteResponse {
     private Long id;

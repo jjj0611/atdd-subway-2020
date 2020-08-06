@@ -1,10 +1,12 @@
 package wooteco.security.oauth2.authentication;
 
-import org.apache.logging.log4j.util.Strings;
-import wooteco.security.web.AuthorizationType;
+import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
+
+import org.apache.logging.log4j.util.Strings;
+
+import wooteco.security.web.AuthorizationType;
 
 public class AuthorizationExtractor {
     public static final String AUTHORIZATION = "Authorization";

@@ -1,5 +1,9 @@
 package wooteco.study.jgraph;
 
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.List;
+
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.alg.shortestpath.KShortestPaths;
@@ -7,10 +11,6 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.Multigraph;
 import org.jgrapht.graph.WeightedMultigraph;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class JgraphTest {
     @Test

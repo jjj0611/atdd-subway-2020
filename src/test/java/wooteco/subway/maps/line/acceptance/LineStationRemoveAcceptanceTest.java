@@ -1,20 +1,19 @@
 package wooteco.subway.maps.line.acceptance;
 
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
-import wooteco.subway.common.acceptance.AcceptanceTest;
-import wooteco.subway.maps.line.dto.LineResponse;
-import wooteco.subway.maps.station.dto.StationResponse;
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
+import wooteco.subway.common.acceptance.AcceptanceTest;
 import wooteco.subway.maps.line.acceptance.step.LineAcceptanceStep;
 import wooteco.subway.maps.line.acceptance.step.LineStationAcceptanceStep;
+import wooteco.subway.maps.line.dto.LineResponse;
 import wooteco.subway.maps.station.acceptance.step.StationAcceptanceStep;
-
-import java.util.Arrays;
-
-import static wooteco.subway.maps.line.acceptance.step.LineAcceptanceStep.지하철_노선_조회_요청;
+import wooteco.subway.maps.station.dto.StationResponse;
 
 @DisplayName("지하철 노선에 역 제외 관련 기능")
 public class LineStationRemoveAcceptanceTest extends AcceptanceTest {

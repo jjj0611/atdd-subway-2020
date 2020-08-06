@@ -1,11 +1,12 @@
 package wooteco.subway.members.member.application;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import wooteco.subway.members.member.domain.Member;
 import wooteco.subway.members.member.domain.MemberRepository;
 import wooteco.subway.members.member.dto.MemberRequest;
 import wooteco.subway.members.member.dto.MemberResponse;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional

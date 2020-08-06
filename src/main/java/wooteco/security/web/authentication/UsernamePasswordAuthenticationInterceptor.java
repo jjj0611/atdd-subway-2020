@@ -1,18 +1,20 @@
 package wooteco.security.web.authentication;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import wooteco.security.core.authentication.AuthenticationManager;
 import wooteco.security.core.authentication.AuthenticationToken;
 import wooteco.security.web.authentication.handler.AuthenticationFailureHandler;
 import wooteco.security.web.authentication.handler.AuthenticationSuccessHandler;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
-
 public class UsernamePasswordAuthenticationInterceptor extends AbstractAuthenticationInterceptor {
     public static final String USERNAME_FIELD = "username";
     public static final String PASSWORD_FIELD = "password";
 
-    public UsernamePasswordAuthenticationInterceptor(AuthenticationManager authenticationManager, AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler) {
+    public UsernamePasswordAuthenticationInterceptor(AuthenticationManager authenticationManager,
+        AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler) {
         super(authenticationManager, successHandler, failureHandler);
     }
 

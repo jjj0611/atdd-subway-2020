@@ -1,15 +1,17 @@
 package wooteco.subway.maps.line.application;
 
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.google.common.collect.Lists;
+
 import wooteco.subway.maps.line.domain.Line;
 import wooteco.subway.maps.line.domain.LineStation;
 import wooteco.subway.maps.line.dto.LineStationCreateRequest;
 import wooteco.subway.maps.station.application.StationService;
 import wooteco.subway.maps.station.domain.Station;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Map;
 
 @Service
 @Transactional
@@ -26,7 +28,8 @@ public class LineStationService {
         checkAddLineStationValidation(request);
 
         Line line = lineService.findLineById(lineId);
-        LineStation lineStation = new LineStation(request.getStationId(), request.getPreStationId(), request.getDistance(), request.getDuration());
+        LineStation lineStation = new LineStation(request.getStationId(), request.getPreStationId(),
+            request.getDistance(), request.getDuration());
         line.addLineStation(lineStation);
     }
 
@@ -36,7 +39,8 @@ public class LineStationService {
     }
 
     private void checkAddLineStationValidation(LineStationCreateRequest request) {
-        Map<Long, Station> stations = stationService.findStationsByIds(Lists.newArrayList(request.getPreStationId(), request.getStationId()));
+        Map<Long, Station> stations = stationService.findStationsByIds(
+            Lists.newArrayList(request.getPreStationId(), request.getStationId()));
 
         if (stations.get(request.getStationId()) == null) {
             throw new RuntimeException();

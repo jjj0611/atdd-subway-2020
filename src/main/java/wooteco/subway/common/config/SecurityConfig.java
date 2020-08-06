@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 import wooteco.security.core.authentication.AuthenticationProvider;
 import wooteco.security.core.userdetails.UserDetailsService;
 import wooteco.security.oauth2.token.JwtTokenProvider;
@@ -39,18 +40,18 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public UsernamePasswordAuthenticationInterceptor createUsernamePasswordAuthenticationInterceptor() {
         return new UsernamePasswordAuthenticationInterceptor(
-                createAuthenticationProvider(),
-                createSaveSessionSuccessHandler(),
-                createSimpleUrlAuthenticationFailureHandler()
+            createAuthenticationProvider(),
+            createSaveSessionSuccessHandler(),
+            createSimpleUrlAuthenticationFailureHandler()
         );
     }
 
     @Bean
     public TokenAuthenticationInterceptor createTokenAuthenticationInterceptor() {
         return new TokenAuthenticationInterceptor(
-                createAuthenticationProvider(),
-                createIssueTokenSuccessHandler(),
-                createSimpleUrlAuthenticationFailureHandler()
+            createAuthenticationProvider(),
+            createIssueTokenSuccessHandler(),
+            createSimpleUrlAuthenticationFailureHandler()
         );
     }
 

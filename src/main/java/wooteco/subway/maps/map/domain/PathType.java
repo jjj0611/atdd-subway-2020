@@ -1,8 +1,8 @@
 package wooteco.subway.maps.map.domain;
 
-import wooteco.subway.maps.line.domain.LineStation;
-
 import java.util.function.Function;
+
+import wooteco.subway.maps.line.domain.LineStation;
 
 public enum PathType {
     DISTANCE(lineStation -> lineStation.getDistance()),

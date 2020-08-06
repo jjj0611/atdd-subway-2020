@@ -1,19 +1,21 @@
 package wooteco.security.web.authentication;
 
-import wooteco.security.core.authentication.AuthenticationManager;
-import wooteco.security.core.authentication.AuthenticationToken;
-import wooteco.security.web.authentication.handler.AuthenticationFailureHandler;
-import wooteco.security.web.authentication.handler.AuthenticationSuccessHandler;
-import wooteco.security.web.AuthorizationType;
-import wooteco.security.oauth2.authentication.AuthorizationExtractor;
+import java.util.Base64;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
+
+import wooteco.security.core.authentication.AuthenticationManager;
+import wooteco.security.core.authentication.AuthenticationToken;
+import wooteco.security.oauth2.authentication.AuthorizationExtractor;
+import wooteco.security.web.AuthorizationType;
+import wooteco.security.web.authentication.handler.AuthenticationFailureHandler;
+import wooteco.security.web.authentication.handler.AuthenticationSuccessHandler;
 
 public class TokenAuthenticationInterceptor extends AbstractAuthenticationInterceptor {
     private static final String REGEX = ":";
 
-    public TokenAuthenticationInterceptor(AuthenticationManager authenticationManager, AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler) {
+    public TokenAuthenticationInterceptor(AuthenticationManager authenticationManager,
+        AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler) {
         super(authenticationManager, successHandler, failureHandler);
     }
 

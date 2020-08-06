@@ -1,10 +1,11 @@
 package wooteco.subway.members.member.acceptance;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import wooteco.subway.common.acceptance.AcceptanceTest;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep;
 
 public class MemberAcceptanceTest extends AcceptanceTest {
@@ -26,7 +27,8 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         MemberAcceptanceStep.회원_정보_조회됨(findResponse, EMAIL, AGE);
 
         // when
-        ExtractableResponse<Response> updateResponse = MemberAcceptanceStep.회원_정보_수정_요청(createResponse, "new" + EMAIL, "new" + PASSWORD, AGE + 2);
+        ExtractableResponse<Response> updateResponse = MemberAcceptanceStep.회원_정보_수정_요청(createResponse, "new" + EMAIL,
+            "new" + PASSWORD, AGE + 2);
         // then
         MemberAcceptanceStep.회원_정보_수정됨(updateResponse);
 

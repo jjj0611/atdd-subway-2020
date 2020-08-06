@@ -1,11 +1,12 @@
 package wooteco.subway.members.member.application;
 
-import wooteco.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
+
 import wooteco.security.core.authentication.AuthenticationException;
+import wooteco.security.core.userdetails.UserDetailsService;
 import wooteco.subway.members.member.domain.LoginMember;
 import wooteco.subway.members.member.domain.Member;
 import wooteco.subway.members.member.domain.MemberRepository;
-import org.springframework.stereotype.Service;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {

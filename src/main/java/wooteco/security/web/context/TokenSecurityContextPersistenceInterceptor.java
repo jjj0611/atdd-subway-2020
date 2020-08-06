@@ -1,18 +1,21 @@
 package wooteco.security.web.context;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.web.servlet.HandlerInterceptor;
-import wooteco.security.web.AuthorizationType;
-import wooteco.security.oauth2.authentication.AuthorizationExtractor;
-import wooteco.security.oauth2.token.JwtTokenProvider;
-import wooteco.security.core.context.SecurityContext;
-import wooteco.security.core.context.SecurityContextHolder;
-import wooteco.security.core.Authentication;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
+
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import wooteco.security.core.Authentication;
+import wooteco.security.core.context.SecurityContext;
+import wooteco.security.core.context.SecurityContextHolder;
+import wooteco.security.oauth2.authentication.AuthorizationExtractor;
+import wooteco.security.oauth2.token.JwtTokenProvider;
+import wooteco.security.web.AuthorizationType;
 
 public class TokenSecurityContextPersistenceInterceptor implements HandlerInterceptor {
     private JwtTokenProvider jwtTokenProvider;

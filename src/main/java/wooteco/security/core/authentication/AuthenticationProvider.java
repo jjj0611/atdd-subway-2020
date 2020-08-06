@@ -1,8 +1,8 @@
 package wooteco.security.core.authentication;
 
+import wooteco.security.core.Authentication;
 import wooteco.security.core.userdetails.UserDetails;
 import wooteco.security.core.userdetails.UserDetailsService;
-import wooteco.security.core.Authentication;
 
 public class AuthenticationProvider implements AuthenticationManager {
     private UserDetailsService userDetailsService;

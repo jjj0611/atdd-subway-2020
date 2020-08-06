@@ -1,17 +1,17 @@
 package wooteco.subway.members.member.acceptance;
 
-import io.restassured.RestAssured;
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
+import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+
+import io.restassured.RestAssured;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import wooteco.security.core.TokenResponse;
 import wooteco.subway.common.acceptance.AcceptanceTest;
-
-import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.*;
-import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.회원_등록되어_있음;
 
 public class AuthAcceptanceTest extends AcceptanceTest {
     private static final String EMAIL = "email@email.com";
@@ -35,13 +35,13 @@ public class AuthAcceptanceTest extends AcceptanceTest {
         회원_등록되어_있음(EMAIL, PASSWORD, AGE);
 
         RestAssured.given().log().all().
-                auth().preemptive().basic(EMAIL + "OTHER", PASSWORD).
-                accept(MediaType.APPLICATION_JSON_VALUE).
-                when().
-                post("/login/token").
-                then().
-                log().all().
-                statusCode(HttpStatus.FOUND.value());
+            auth().preemptive().basic(EMAIL + "OTHER", PASSWORD).
+            accept(MediaType.APPLICATION_JSON_VALUE).
+            when().
+            post("/login/token").
+            then().
+            log().all().
+            statusCode(HttpStatus.FOUND.value());
     }
 
     @DisplayName("Bearer Auth 유효하지 않은 토큰")
@@ -50,12 +50,12 @@ public class AuthAcceptanceTest extends AcceptanceTest {
         TokenResponse tokenResponse = new TokenResponse("accesstoken");
 
         RestAssured.given().log().all().
-                auth().oauth2(tokenResponse.getAccessToken()).
-                accept(MediaType.APPLICATION_JSON_VALUE).
-                when().
-                get("/members/me").
-                then().
-                log().all().
-                statusCode(HttpStatus.UNAUTHORIZED.value());
+            auth().oauth2(tokenResponse.getAccessToken()).
+            accept(MediaType.APPLICATION_JSON_VALUE).
+            when().
+            get("/members/me").
+            then().
+            log().all().
+            statusCode(HttpStatus.UNAUTHORIZED.value());
     }
 }

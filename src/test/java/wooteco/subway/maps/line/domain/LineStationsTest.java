@@ -1,14 +1,13 @@
 package wooteco.subway.maps.line.domain;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 @DisplayName("지하철 노선 단위 테스트")
 public class LineStationsTest {
@@ -31,8 +30,8 @@ public class LineStationsTest {
 
         // then
         List<Long> stationIds = lineStations.getStationsInOrder().stream()
-                .map(it -> it.getStationId())
-                .collect(Collectors.toList());
+            .map(it -> it.getStationId())
+            .collect(Collectors.toList());
         assertThat(stationIds).containsExactly(1L, 2L, 3L, 4L);
     }
 
@@ -44,8 +43,8 @@ public class LineStationsTest {
 
         // then
         List<Long> stationIds = lineStations.getStationsInOrder().stream()
-                .map(it -> it.getStationId())
-                .collect(Collectors.toList());
+            .map(it -> it.getStationId())
+            .collect(Collectors.toList());
         assertThat(stationIds).containsExactly(1L, 4L, 2L, 3L);
     }
 
@@ -54,7 +53,7 @@ public class LineStationsTest {
     void add3() {
         // when
         assertThatThrownBy(() -> lineStations.add(new LineStation(2L, 1L, 10, 10)))
-                .isInstanceOf(RuntimeException.class);
+            .isInstanceOf(RuntimeException.class);
     }
 
     @DisplayName("지하철 노선에 등록된 마지막 지하철역을 제외한다.")
@@ -65,8 +64,8 @@ public class LineStationsTest {
 
         // then
         List<Long> stationIds = lineStations.getStationsInOrder().stream()
-                .map(it -> it.getStationId())
-                .collect(Collectors.toList());
+            .map(it -> it.getStationId())
+            .collect(Collectors.toList());
         assertThat(stationIds).containsExactly(1L, 2L);
     }
 
@@ -78,8 +77,8 @@ public class LineStationsTest {
 
         // then
         List<Long> stationIds = lineStations.getStationsInOrder().stream()
-                .map(it -> it.getStationId())
-                .collect(Collectors.toList());
+            .map(it -> it.getStationId())
+            .collect(Collectors.toList());
         assertThat(stationIds).containsExactly(1L, 3L);
     }
 
@@ -88,7 +87,7 @@ public class LineStationsTest {
     void removeLineStation3() {
         // when
         assertThatThrownBy(() -> lineStations.removeByStationId(null))
-                .isInstanceOf(RuntimeException.class);
+            .isInstanceOf(RuntimeException.class);
     }
 
     @DisplayName("지하철 노선에서 등록되지 않는 역을 제외한다.")
@@ -96,6 +95,6 @@ public class LineStationsTest {
     void removeLineStation4() {
         // when
         assertThatThrownBy(() -> lineStations.removeByStationId(100L))
-                .isInstanceOf(RuntimeException.class);
+            .isInstanceOf(RuntimeException.class);
     }
 }

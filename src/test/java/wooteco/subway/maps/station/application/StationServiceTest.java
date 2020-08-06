@@ -1,19 +1,20 @@
 package wooteco.subway.maps.station.application;
 
-import com.google.common.collect.Lists;
-import wooteco.subway.common.TestObjectUtils;
-import wooteco.subway.maps.station.domain.Station;
-import wooteco.subway.maps.station.domain.StationRepository;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import com.google.common.collect.Lists;
+
+import wooteco.subway.common.TestObjectUtils;
+import wooteco.subway.maps.station.domain.Station;
+import wooteco.subway.maps.station.domain.StationRepository;
 
 class StationServiceTest {
 
@@ -23,9 +24,9 @@ class StationServiceTest {
         StationRepository stationRepository = mock(StationRepository.class);
         StationService stationService = new StationService(stationRepository);
         ArrayList<Station> persistStations = Lists.newArrayList(
-                TestObjectUtils.createStation(1L, "강남역"),
-                TestObjectUtils.createStation(2L, "역삼역"),
-                TestObjectUtils.createStation(3L, "선릉역")
+            TestObjectUtils.createStation(1L, "강남역"),
+            TestObjectUtils.createStation(2L, "역삼역"),
+            TestObjectUtils.createStation(3L, "선릉역")
         );
 
         when(stationRepository.findAllById(anyList())).thenReturn(persistStations);

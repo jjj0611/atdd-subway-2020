@@ -1,10 +1,10 @@
 package wooteco.subway.maps.station.dto;
 
-import wooteco.subway.maps.station.domain.Station;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import wooteco.subway.maps.station.domain.Station;
 
 public class StationResponse {
     private Long id;
@@ -23,13 +23,14 @@ public class StationResponse {
     }
 
     public static StationResponse of(Station station) {
-        return new StationResponse(station.getId(), station.getName(), station.getCreatedDate(), station.getModifiedDate());
+        return new StationResponse(station.getId(), station.getName(), station.getCreatedDate(),
+            station.getModifiedDate());
     }
 
     public static List<StationResponse> listOf(List<Station> stations) {
         return stations.stream()
-                .map(StationResponse::of)
-                .collect(Collectors.toList());
+            .map(StationResponse::of)
+            .collect(Collectors.toList());
     }
 
     public Long getId() {

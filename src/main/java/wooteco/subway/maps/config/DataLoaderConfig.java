@@ -1,16 +1,18 @@
 package wooteco.subway.maps.config;
 
-import com.google.common.collect.Lists;
+import java.time.LocalTime;
+
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+import com.google.common.collect.Lists;
+
 import wooteco.subway.maps.line.domain.Line;
 import wooteco.subway.maps.line.domain.LineRepository;
 import wooteco.subway.maps.line.domain.LineStation;
 import wooteco.subway.maps.station.domain.Station;
 import wooteco.subway.maps.station.domain.StationRepository;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-
-import java.time.LocalTime;
 
 @Component
 @Profile("!documentation")

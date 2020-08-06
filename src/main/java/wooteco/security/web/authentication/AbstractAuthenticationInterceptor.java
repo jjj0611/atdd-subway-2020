@@ -1,31 +1,35 @@
 package wooteco.security.web.authentication;
 
-import wooteco.security.core.authentication.AuthenticationException;
-import wooteco.security.core.authentication.AuthenticationManager;
-import wooteco.security.core.authentication.AuthenticationToken;
-import wooteco.security.core.Authentication;
-import wooteco.security.web.authentication.handler.AuthenticationFailureHandler;
-import wooteco.security.web.authentication.handler.AuthenticationSuccessHandler;
-import wooteco.security.core.context.SecurityContextHolder;
-import org.springframework.web.servlet.HandlerInterceptor;
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import wooteco.security.core.Authentication;
+import wooteco.security.core.authentication.AuthenticationException;
+import wooteco.security.core.authentication.AuthenticationManager;
+import wooteco.security.core.authentication.AuthenticationToken;
+import wooteco.security.core.context.SecurityContextHolder;
+import wooteco.security.web.authentication.handler.AuthenticationFailureHandler;
+import wooteco.security.web.authentication.handler.AuthenticationSuccessHandler;
 
 public abstract class AbstractAuthenticationInterceptor implements HandlerInterceptor {
     private AuthenticationManager authenticationManager;
     private AuthenticationSuccessHandler successHandler;
     private AuthenticationFailureHandler failureHandler;
 
-    protected AbstractAuthenticationInterceptor(AuthenticationManager authenticationManager, AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler) {
+    protected AbstractAuthenticationInterceptor(AuthenticationManager authenticationManager,
+        AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler) {
         this.authenticationManager = authenticationManager;
         this.successHandler = successHandler;
         this.failureHandler = failureHandler;
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws
+        IOException {
         try {
             Authentication authentication = attemptAuthentication(request, response);
             successfulAuthentication(request, response, authentication);
@@ -36,14 +40,15 @@ public abstract class AbstractAuthenticationInterceptor implements HandlerInterc
         return false;
     }
 
-    private void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+    private void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+        Authentication authentication) throws IOException {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         successHandler.onAuthenticationSuccess(request, response, authentication);
     }
 
     protected void unsuccessfulAuthentication(HttpServletRequest request,
-                                              HttpServletResponse response, AuthenticationException failed) throws IOException {
+        HttpServletResponse response, AuthenticationException failed) throws IOException {
         SecurityContextHolder.clearContext();
 
         failureHandler.onAuthenticationFailure(request, response, failed);

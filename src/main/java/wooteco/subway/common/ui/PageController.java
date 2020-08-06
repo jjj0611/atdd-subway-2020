@@ -22,7 +22,9 @@ public class PageController {
     }
 
     @GetMapping(value = "/edges", produces = MediaType.TEXT_HTML_VALUE)
-    public String lineStations() { return "index"; }
+    public String lineStations() {
+        return "index";
+    }
 
     @GetMapping(value = "/maps", produces = MediaType.TEXT_HTML_VALUE)
     public String maps() {

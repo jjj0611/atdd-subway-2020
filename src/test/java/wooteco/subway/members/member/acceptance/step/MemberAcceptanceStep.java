@@ -1,18 +1,19 @@
 package wooteco.subway.members.member.acceptance.step;
 
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+
 import io.restassured.RestAssured;
 import io.restassured.authentication.FormAuthConfig;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import wooteco.security.core.TokenResponse;
 import wooteco.subway.members.member.dto.MemberResponse;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class MemberAcceptanceStep {
     public static final String USERNAME_FIELD = "username";
@@ -29,14 +30,14 @@ public class MemberAcceptanceStep {
 
     public static ExtractableResponse<Response> 로그인_요청(String email, String password) {
         return RestAssured.given().log().all().
-                auth().preemptive().basic(email, password).
-                accept(MediaType.APPLICATION_JSON_VALUE).
-                when().
-                post("/login/token").
-                then().
-                log().all().
-                statusCode(HttpStatus.OK.value()).
-                extract();
+            auth().preemptive().basic(email, password).
+            accept(MediaType.APPLICATION_JSON_VALUE).
+            when().
+            post("/login/token").
+            then().
+            log().all().
+            statusCode(HttpStatus.OK.value()).
+            extract();
     }
 
     public static ExtractableResponse<Response> 회원_생성을_요청(String email, String password, Integer age) {
@@ -46,28 +47,29 @@ public class MemberAcceptanceStep {
         params.put("age", age + "");
 
         return RestAssured.given().log().all().
-                contentType(MediaType.APPLICATION_JSON_VALUE).
-                body(params).
-                when().
-                post("/members").
-                then().
-                log().all().
-                extract();
+            contentType(MediaType.APPLICATION_JSON_VALUE).
+            body(params).
+            when().
+            post("/members").
+            then().
+            log().all().
+            extract();
     }
 
     public static ExtractableResponse<Response> 회원_정보_조회_요청(ExtractableResponse<Response> response) {
         String uri = response.header("Location");
 
         return RestAssured.given().log().all().
-                accept(MediaType.APPLICATION_JSON_VALUE).
-                when().
-                get(uri).
-                then().
-                log().all().
-                extract();
+            accept(MediaType.APPLICATION_JSON_VALUE).
+            when().
+            get(uri).
+            then().
+            log().all().
+            extract();
     }
 
-    public static ExtractableResponse<Response> 회원_정보_수정_요청(ExtractableResponse<Response> response, String email, String password, Integer age) {
+    public static ExtractableResponse<Response> 회원_정보_수정_요청(ExtractableResponse<Response> response, String email,
+        String password, Integer age) {
         String uri = response.header("Location");
 
         Map<String, String> params = new HashMap<>();
@@ -76,47 +78,47 @@ public class MemberAcceptanceStep {
         params.put("age", age + "");
 
         return RestAssured.given().log().all().
-                contentType(MediaType.APPLICATION_JSON_VALUE).
-                body(params).
-                when().
-                put(uri).
-                then().
-                log().all().
-                extract();
+            contentType(MediaType.APPLICATION_JSON_VALUE).
+            body(params).
+            when().
+            put(uri).
+            then().
+            log().all().
+            extract();
     }
 
     public static ExtractableResponse<Response> 회원_삭제_요청(ExtractableResponse<Response> response) {
         String uri = response.header("Location");
         return RestAssured.given().log().all().
-                when().
-                delete(uri).
-                then().
-                log().all().
-                extract();
+            when().
+            delete(uri).
+            then().
+            log().all().
+            extract();
     }
 
     public static ExtractableResponse<Response> 내_회원_정보_조회_요청(String email, String password) {
         return RestAssured.given().log().all().
-                auth().form(email, password, new FormAuthConfig("/login/session", USERNAME_FIELD, PASSWORD_FIELD)).
-                accept(MediaType.APPLICATION_JSON_VALUE).
-                when().
-                get("/members/me").
-                then().
-                log().all().
-                statusCode(HttpStatus.OK.value()).
-                extract();
+            auth().form(email, password, new FormAuthConfig("/login/session", USERNAME_FIELD, PASSWORD_FIELD)).
+            accept(MediaType.APPLICATION_JSON_VALUE).
+            when().
+            get("/members/me").
+            then().
+            log().all().
+            statusCode(HttpStatus.OK.value()).
+            extract();
     }
 
     public static ExtractableResponse<Response> 내_회원_정보_조회_요청(TokenResponse tokenResponse) {
         return RestAssured.given().log().all().
-                auth().oauth2(tokenResponse.getAccessToken()).
-                accept(MediaType.APPLICATION_JSON_VALUE).
-                when().
-                get("/members/me").
-                then().
-                log().all().
-                statusCode(HttpStatus.OK.value()).
-                extract();
+            auth().oauth2(tokenResponse.getAccessToken()).
+            accept(MediaType.APPLICATION_JSON_VALUE).
+            when().
+            get("/members/me").
+            then().
+            log().all().
+            statusCode(HttpStatus.OK.value()).
+            extract();
     }
 
     public static void 로그인_됨(ExtractableResponse<Response> response) {
@@ -125,7 +127,6 @@ public class MemberAcceptanceStep {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
         assertThat(tokenResponse.getAccessToken()).isNotBlank();
     }
-
 
     public static void 회원_생성됨(ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());

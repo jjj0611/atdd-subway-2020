@@ -1,13 +1,14 @@
 package wooteco.subway.maps.line.acceptance;
 
+import java.util.Arrays;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import wooteco.subway.common.acceptance.AcceptanceTest;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import wooteco.subway.maps.line.acceptance.step.LineAcceptanceStep;
-
-import java.util.Arrays;
 
 @DisplayName("지하철 노선 관련 기능")
 public class LineAcceptanceTest extends AcceptanceTest {

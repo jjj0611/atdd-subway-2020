@@ -1,13 +1,14 @@
 package wooteco.security.web.context;
 
-import wooteco.security.core.context.SecurityContext;
-import wooteco.security.core.context.SecurityContextHolder;
-import org.springframework.web.servlet.HandlerInterceptor;
+import static wooteco.security.core.context.SecurityContextHolder.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static wooteco.security.core.context.SecurityContextHolder.SPRING_SECURITY_CONTEXT_KEY;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import wooteco.security.core.context.SecurityContext;
+import wooteco.security.core.context.SecurityContextHolder;
 
 public class SessionSecurityContextPersistenceInterceptor implements HandlerInterceptor {
     @Override
@@ -16,7 +17,8 @@ public class SessionSecurityContextPersistenceInterceptor implements HandlerInte
             return true;
         }
 
-        SecurityContext securityContext = (SecurityContext) request.getSession().getAttribute(SPRING_SECURITY_CONTEXT_KEY);
+        SecurityContext securityContext = (SecurityContext)request.getSession()
+            .getAttribute(SPRING_SECURITY_CONTEXT_KEY);
         if (securityContext != null) {
             SecurityContextHolder.setContext(securityContext);
         }
@@ -24,7 +26,8 @@ public class SessionSecurityContextPersistenceInterceptor implements HandlerInte
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+        Exception ex) {
         SecurityContextHolder.clearContext();
     }
 }

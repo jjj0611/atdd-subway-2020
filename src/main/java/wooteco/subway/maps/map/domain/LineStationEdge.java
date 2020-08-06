@@ -1,7 +1,8 @@
 package wooteco.subway.maps.map.domain;
 
-import wooteco.subway.maps.line.domain.LineStation;
 import org.jgrapht.graph.DefaultWeightedEdge;
+
+import wooteco.subway.maps.line.domain.LineStation;
 
 public class LineStationEdge extends DefaultWeightedEdge {
     private LineStation lineStation;
