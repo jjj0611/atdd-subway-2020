@@ -99,6 +99,5 @@ public class MapServiceTest {
         MapResponse mapResponse = mapService.findMap();
 
         assertThat(mapResponse.getLineResponses()).hasSize(3);
-
     }
 }
