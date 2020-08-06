@@ -14,6 +14,7 @@ import wooteco.subway.maps.station.application.StationService;
 import wooteco.subway.maps.station.domain.Station;
 import wooteco.subway.maps.station.dto.StationResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class MapService {
         this.pathService = pathService;
     }
 
+    @Transactional
     public MapResponse findMap() {
         List<Line> lines = lineService.findLines();
         Map<Long, Station> stations = findStations(lines);
@@ -43,6 +45,7 @@ public class MapService {
         return new MapResponse(lineResponses);
     }
 
+    @Transactional
     public PathResponse findPath(Long source, Long target, PathType type) {
         List<Line> lines = lineService.findLines();
         SubwayPath subwayPath = pathService.findPath(lines, source, target, type);
