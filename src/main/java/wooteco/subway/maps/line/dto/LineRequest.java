@@ -10,12 +10,13 @@ public class LineRequest {
     private LocalTime startTime;
     private LocalTime endTime;
     private Integer intervalTime;
-    private Integer extraFare;
+    private int extraFare;
 
     public LineRequest() {
     }
 
-    public LineRequest(String name, String color, LocalTime startTime, LocalTime endTime, Integer intervalTime, Integer extraFare) {
+    public LineRequest(String name, String color, LocalTime startTime, LocalTime endTime, Integer intervalTime,
+        Integer extraFare) {
         this.name = name;
         this.color = color;
         this.startTime = startTime;
@@ -49,6 +50,6 @@ public class LineRequest {
     }
 
     public Line toLine() {
-        return new Line(name, color, startTime, endTime, intervalTime);
+        return new Line(name, color, startTime, endTime, intervalTime, extraFare);
     }
 }

@@ -26,7 +26,8 @@ public class PathAcceptanceStep {
             extract();
     }
 
-    public static ExtractableResponse<Response> 로그인_상태로_거리_경로_조회_요청(String type, long source, long target, TokenResponse tokenResponse) {
+    public static ExtractableResponse<Response> 로그인_상태로_거리_경로_조회_요청(String type, long source, long target,
+        TokenResponse tokenResponse) {
         return RestAssured.given().log().all().
             auth().oauth2(tokenResponse.getAccessToken()).
             accept(MediaType.APPLICATION_JSON_VALUE).

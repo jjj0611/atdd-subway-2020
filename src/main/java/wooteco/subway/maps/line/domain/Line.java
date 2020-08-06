@@ -30,12 +30,13 @@ public class Line extends BaseEntity {
     public Line() {
     }
 
-    public Line(String name, String color, LocalTime startTime, LocalTime endTime, int intervalTime) {
+    public Line(String name, String color, LocalTime startTime, LocalTime endTime, int intervalTime, int extraFare) {
         this.name = name;
         this.color = color;
         this.startTime = startTime;
         this.endTime = endTime;
         this.intervalTime = intervalTime;
+        this.extraFare = extraFare;
     }
 
     public void update(Line line) {

@@ -18,6 +18,8 @@ import wooteco.subway.maps.line.domain.LineStation;
 import wooteco.subway.maps.station.domain.Station;
 
 class SubwayPathTest {
+    private Line extraFareLine500;
+    private Line extraFareLine900;
     private Map<Long, Station> stations;
     private List<Line> lines;
     private List<LineStationEdge> edges;
@@ -40,7 +42,8 @@ class SubwayPathTest {
         stations.put(7L, TestObjectUtils.createStation(7L, "잠실새내역"));
 
         Line line = TestObjectUtils.createLine(1L, "3호선", "ORANGE");
-        line.addLineStation(new LineStation(1L, null, 0, 0));
+        LineStation firstLineStation = new LineStation(1L, null, 0, 0);
+        line.addLineStation(firstLineStation);
         lineStation1 = new LineStation(4L, 1L, 9, 1);
         lineStation2 = new LineStation(3L, 4L, 1, 1);
         lineStation3 = new LineStation(2L, 3L, 1, 1);
@@ -54,7 +57,19 @@ class SubwayPathTest {
         line.addLineStation(lineStation5);
         line.addLineStation(lineStation6);
 
-        lines = Lists.newArrayList(line);
+        extraFareLine500 = TestObjectUtils.createLineWithExtraFare(2L, "2호선", "GREEN", 500);
+        extraFareLine500.addLineStation(firstLineStation);
+        extraFareLine500.addLineStation(lineStation1);
+        extraFareLine500.addLineStation(lineStation2);
+        extraFareLine500.addLineStation(lineStation3);
+
+        extraFareLine900 = TestObjectUtils.createLineWithExtraFare(3L, "1호선", "BLUE", 900);
+        extraFareLine900.addLineStation(new LineStation(2L, null, 0, 0));
+        extraFareLine900.addLineStation(lineStation4);
+        extraFareLine900.addLineStation(lineStation5);
+        extraFareLine900.addLineStation(lineStation6);
+
+        lines = Lists.newArrayList(line, extraFareLine500, extraFareLine900);
     }
 
     @DisplayName("추가 요금 없는 라인에서 10키로 이동시 1250원")
@@ -153,5 +168,56 @@ class SubwayPathTest {
         int fare = subwayPath.calculateFare(distance, lines, 18);
         assertThat(distance).isEqualTo(59);
         assertThat(fare).isEqualTo(1425);
+    }
+
+    @DisplayName("추가 요금 없는 라인에서 어린이가 59키로 이동시 1425")
+    @Test
+    void calculateFareChild() {
+        edges = Lists.newArrayList(
+            new LineStationEdge(lineStation1, 1L),
+            new LineStationEdge(lineStation2, 1L),
+            new LineStationEdge(lineStation3, 1L),
+            new LineStationEdge(lineStation4, 1L),
+            new LineStationEdge(lineStation5, 1L),
+            new LineStationEdge(lineStation6, 1L)
+        );
+        SubwayPath subwayPath = new SubwayPath(edges);
+        int distance = subwayPath.calculateDistance();
+        int fare = subwayPath.calculateFare(distance, lines, 12);
+        assertThat(distance).isEqualTo(59);
+        assertThat(fare).isEqualTo(950);
+    }
+
+    @DisplayName("추가 요금 500원 있는 라인에서 11 이동시 1350")
+    @Test
+    void calculateExtraFare() {
+        edges = Lists.newArrayList(
+            new LineStationEdge(lineStation1, extraFareLine500.getId()),
+            new LineStationEdge(lineStation2, extraFareLine500.getId()),
+            new LineStationEdge(lineStation3, extraFareLine500.getId())
+        );
+        SubwayPath subwayPath = new SubwayPath(edges);
+        int distance = subwayPath.calculateDistance();
+        int fare = subwayPath.calculateFare(distance, lines, 20);
+        assertThat(distance).isEqualTo(11);
+        assertThat(fare).isEqualTo(1850);
+    }
+
+    @DisplayName("추가 요금 500원, 900원 있는 라인에서 59 이동시 3150")
+    @Test
+    void calculateTwoExtraFare() {
+        edges = Lists.newArrayList(
+            new LineStationEdge(lineStation1, extraFareLine500.getId()),
+            new LineStationEdge(lineStation2, extraFareLine500.getId()),
+            new LineStationEdge(lineStation3, extraFareLine500.getId()),
+            new LineStationEdge(lineStation4, extraFareLine900.getId()),
+            new LineStationEdge(lineStation5, extraFareLine900.getId()),
+            new LineStationEdge(lineStation6, extraFareLine900.getId())
+        );
+        SubwayPath subwayPath = new SubwayPath(edges);
+        int distance = subwayPath.calculateDistance();
+        int fare = subwayPath.calculateFare(distance, lines, 20);
+        assertThat(distance).isEqualTo(59);
+        assertThat(fare).isEqualTo(3150);
     }
 }

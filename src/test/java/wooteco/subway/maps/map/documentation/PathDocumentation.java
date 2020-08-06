@@ -62,7 +62,7 @@ public class PathDocumentation extends Documentation {
                 getDocumentRequest(),
                 getDocumentResponse(),
                 requestHeaders(
-                    headerWithName("Authorization").description("Bearer auth credentials")),
+                    headerWithName("Authorization").description("Bearer auth credentials").optional()),
                 requestParameters(
                     parameterWithName("source").description("출발역"),
                     parameterWithName("target").description("도착역"),

@@ -2,7 +2,6 @@ package wooteco.subway.maps.map.domain;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
@@ -59,12 +58,12 @@ public class SubwayPath {
             return 0;
         }
         int firstExtraDistance = getFirstExtraDistance(distance);
-        int extraFare = (int) ((Math.ceil((firstExtraDistance - 1) / 5) + 1) * 100);
+        int extraFare = (int)((Math.ceil((firstExtraDistance - 1) / 5) + 1) * 100);
         if (distance <= 50) {
             return extraFare;
         }
         int secondExtraDistance = distance - 50;
-        int secondExtraFare = (int) ((Math.ceil((secondExtraDistance - 1) / 8) + 1) * 100);
+        int secondExtraFare = (int)((Math.ceil((secondExtraDistance - 1) / 8) + 1) * 100);
         return extraFare + secondExtraFare;
     }
 
@@ -80,10 +79,10 @@ public class SubwayPath {
             return 0;
         }
         if (age < 13) {
-            return (int) ((totalFare - 350) * 0.5);
+            return (int)((totalFare - 350) * 0.5);
         }
         if (age < 19) {
-            return (int) ((totalFare - 350) * 0.75);
+            return (int)((totalFare - 350) * 0.75);
         }
         return totalFare;
     }
