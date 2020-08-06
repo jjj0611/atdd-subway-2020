@@ -2,6 +2,7 @@ package wooteco.subway.maps.map.acceptance;
 
 import static wooteco.subway.maps.line.acceptance.step.LineStationAcceptanceStep.*;
 import static wooteco.subway.maps.map.acceptance.step.PathAcceptanceStep.*;
+import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +12,7 @@ import com.google.common.collect.Lists;
 
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import wooteco.security.core.TokenResponse;
 import wooteco.subway.common.acceptance.AcceptanceTest;
 import wooteco.subway.maps.line.acceptance.step.LineAcceptanceStep;
 import wooteco.subway.maps.line.dto.LineResponse;
@@ -78,6 +80,51 @@ public class PathAcceptanceTest extends AcceptanceTest {
         //then
         적절한_경로를_응답(response, Lists.newArrayList(교대역, 강남역, 양재역));
         총_거리와_소요_시간_요금을_함께_응답함(response, 4, 3, 1250);
+    }
+
+    @DisplayName("청소년이 로그인한 상태에서 경로를 조회한다.")
+    @Test
+    void findPathWithStudentLogin() {
+        //given
+        회원_등록되어_있음("email", "password", 13);
+        TokenResponse tokenResponse = 로그인_되어_있음("email", "password");
+
+        //when
+        ExtractableResponse<Response> response = 로그인_상태로_거리_경로_조회_요청("DISTANCE", 1L, 3L, tokenResponse);
+
+        //then
+        적절한_경로를_응답(response, Lists.newArrayList(교대역, 남부터미널역, 양재역));
+        총_거리와_소요_시간_요금을_함께_응답함(response, 3, 4, 675);
+    }
+
+    @DisplayName("어린이가 로그인한 상태에서 경로를 조회한다.")
+    @Test
+    void findPathWithChildLogin() {
+        //given
+        회원_등록되어_있음("email", "password", 6);
+        TokenResponse tokenResponse = 로그인_되어_있음("email", "password");
+
+        //when
+        ExtractableResponse<Response> response = 로그인_상태로_거리_경로_조회_요청("DISTANCE", 1L, 3L, tokenResponse);
+
+        //then
+        적절한_경로를_응답(response, Lists.newArrayList(교대역, 남부터미널역, 양재역));
+        총_거리와_소요_시간_요금을_함께_응답함(response, 3, 4, 450);
+    }
+
+    @DisplayName("성인이 로그인한 상태에서 경로를 조회한다.")
+    @Test
+    void findPathWithLogin() {
+        //given
+        회원_등록되어_있음("email", "password", 20);
+        TokenResponse tokenResponse = 로그인_되어_있음("email", "password");
+
+        //when
+        ExtractableResponse<Response> response = 로그인_상태로_거리_경로_조회_요청("DISTANCE", 1L, 3L, tokenResponse);
+
+        //then
+        적절한_경로를_응답(response, Lists.newArrayList(교대역, 남부터미널역, 양재역));
+        총_거리와_소요_시간_요금을_함께_응답함(response, 3, 4, 1250);
     }
 
     private Long 지하철_노선_등록되어_있음(String name, String color) {
