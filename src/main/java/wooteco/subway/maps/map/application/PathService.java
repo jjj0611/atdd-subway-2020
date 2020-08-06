@@ -38,6 +38,9 @@ public class PathService {
         LocalTime shortestArrivalTime = LocalTime.of(23, 59);
         GraphPath<Long, LineStationEdge> shortestPath = paths.get(0);
         for (GraphPath<Long, LineStationEdge> path : paths) {
+            if (!(path.getStartVertex().equals(source) && path.getEndVertex().equals(target))) {
+               continue;
+            }
             LocalTime arrivalTime = calculateSubwayArrivalTime(lines, path, baseTime);
             if (arrivalTime.isBefore(shortestArrivalTime)) {
                 shortestArrivalTime = arrivalTime;
