@@ -66,7 +66,7 @@ class SubwayPathTest {
         );
         SubwayPath subwayPath = new SubwayPath(edges);
         int distance = subwayPath.calculateDistance();
-        int fare = subwayPath.calculateFare(distance, lines);
+        int fare = subwayPath.calculateFare(distance, lines, 20);
         assertThat(distance).isEqualTo(10);
         assertThat(fare).isEqualTo(1250);
     }
@@ -81,7 +81,7 @@ class SubwayPathTest {
         );
         SubwayPath subwayPath = new SubwayPath(edges);
         int distance = subwayPath.calculateDistance();
-        int fare = subwayPath.calculateFare(distance, lines);
+        int fare = subwayPath.calculateFare(distance, lines, 20);
         assertThat(distance).isEqualTo(11);
         assertThat(fare).isEqualTo(1350);
     }
@@ -97,7 +97,7 @@ class SubwayPathTest {
         );
         SubwayPath subwayPath = new SubwayPath(edges);
         int distance = subwayPath.calculateDistance();
-        int fare = subwayPath.calculateFare(distance, lines);
+        int fare = subwayPath.calculateFare(distance, lines, 20);
         assertThat(distance).isEqualTo(50);
         assertThat(fare).isEqualTo(2050);
     }
@@ -114,7 +114,7 @@ class SubwayPathTest {
         );
         SubwayPath subwayPath = new SubwayPath(edges);
         int distance = subwayPath.calculateDistance();
-        int fare = subwayPath.calculateFare(distance, lines);
+        int fare = subwayPath.calculateFare(distance, lines, 20);
         assertThat(distance).isEqualTo(58);
         assertThat(fare).isEqualTo(2150);
     }
@@ -132,8 +132,26 @@ class SubwayPathTest {
         );
         SubwayPath subwayPath = new SubwayPath(edges);
         int distance = subwayPath.calculateDistance();
-        int fare = subwayPath.calculateFare(distance, lines);
+        int fare = subwayPath.calculateFare(distance, lines, 20);
         assertThat(distance).isEqualTo(59);
         assertThat(fare).isEqualTo(2250);
+    }
+
+    @DisplayName("추가 요금 없는 라인에서 청소년이 59키로 이동시 1425")
+    @Test
+    void calculateFareStudent() {
+        edges = Lists.newArrayList(
+            new LineStationEdge(lineStation1, 1L),
+            new LineStationEdge(lineStation2, 1L),
+            new LineStationEdge(lineStation3, 1L),
+            new LineStationEdge(lineStation4, 1L),
+            new LineStationEdge(lineStation5, 1L),
+            new LineStationEdge(lineStation6, 1L)
+        );
+        SubwayPath subwayPath = new SubwayPath(edges);
+        int distance = subwayPath.calculateDistance();
+        int fare = subwayPath.calculateFare(distance, lines, 18);
+        assertThat(distance).isEqualTo(59);
+        assertThat(fare).isEqualTo(1425);
     }
 }

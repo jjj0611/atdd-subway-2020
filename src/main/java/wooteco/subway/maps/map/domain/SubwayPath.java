@@ -38,7 +38,7 @@ public class SubwayPath {
         return lineStationEdges.stream().mapToInt(it -> it.getLineStation().getDistance()).sum();
     }
 
-    public int calculateFare(int distance, List<Line> lines) {
+    public int calculateFare(int distance, List<Line> lines, int age) {
         List<Long> pathLines = lineStationEdges.stream()
             .map(LineStationEdge::getLineId)
             .distinct()
@@ -50,7 +50,8 @@ public class SubwayPath {
             .mapToInt(Line::getExtraFare)
             .max().orElse(0);
         int distanceExtraFare = calculateExtraFareWithDistance(distance);
-        return BASIC_PRICE + distanceExtraFare + maximumExtraFare;
+        int totalFare = BASIC_PRICE + distanceExtraFare + maximumExtraFare;
+        return applyDiscount(totalFare, age);
     }
 
     private int calculateExtraFareWithDistance(int distance) {
@@ -72,5 +73,18 @@ public class SubwayPath {
             return 40;
         }
         return distance - 10;
+    }
+
+    private int applyDiscount(int totalFare, int age) {
+        if (age < 6) {
+            return 0;
+        }
+        if (age < 13) {
+            return (int) ((totalFare - 350) * 0.5);
+        }
+        if (age < 19) {
+            return (int) ((totalFare - 350) * 0.75);
+        }
+        return totalFare;
     }
 }

@@ -49,7 +49,7 @@ public class PathDocumentation extends Documentation {
             new StationResponse(1L, "잠실역", LocalDateTime.now(), LocalDateTime.now()),
             new StationResponse(2L, "잠실새내역", LocalDateTime.now(), LocalDateTime.now()));
         PathResponse pathResponse = new PathResponse(stations, 4, 5, 1250);
-        when(mapService.findPath(anyLong(), anyLong(), any())).thenReturn(pathResponse);
+        when(mapService.findPath(anyLong(), anyLong(), any(), any())).thenReturn(pathResponse);
 
         given().log().all().
             header("Authorization", "Bearer " + tokenResponse.getAccessToken()).

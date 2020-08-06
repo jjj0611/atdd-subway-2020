@@ -42,7 +42,7 @@ public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArg
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
-            throw new AuthorizationException();
+            return null;
         }
         if (authentication.getPrincipal() instanceof Map) {
             return extractPrincipal(parameter, authentication);

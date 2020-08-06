@@ -2,6 +2,7 @@ package wooteco.subway.members.favorite.ui;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import wooteco.security.core.AuthenticationPrincipal;
+import wooteco.security.web.AuthorizationException;
 import wooteco.subway.members.favorite.application.FavoriteService;
 import wooteco.subway.members.favorite.dto.FavoriteRequest;
 import wooteco.subway.members.favorite.dto.FavoriteResponse;
@@ -28,6 +30,9 @@ public class FavoriteController {
     @PostMapping("/favorites")
     public ResponseEntity createFavorite(@AuthenticationPrincipal LoginMember loginMember,
         @RequestBody FavoriteRequest request) {
+        if (Objects.isNull(loginMember)) {
+            throw new AuthorizationException();
+        }
         favoriteService.createFavorite(loginMember, request);
         return ResponseEntity
             .created(URI.create("/favorites/" + 1L))
@@ -36,12 +41,18 @@ public class FavoriteController {
 
     @GetMapping("/favorites")
     public ResponseEntity<List<FavoriteResponse>> getFavorites(@AuthenticationPrincipal LoginMember loginMember) {
+        if (Objects.isNull(loginMember)) {
+            throw new AuthorizationException();
+        }
         List<FavoriteResponse> favorites = favoriteService.findFavorites(loginMember);
         return ResponseEntity.ok().body(favorites);
     }
 
     @DeleteMapping("/favorites/{id}")
     public ResponseEntity deleteFavorite(@AuthenticationPrincipal LoginMember loginMember, @PathVariable Long id) {
+        if (Objects.isNull(loginMember)) {
+            throw new AuthorizationException();
+        }
         favoriteService.deleteFavorite(loginMember, id);
         return ResponseEntity.noContent().build();
     }

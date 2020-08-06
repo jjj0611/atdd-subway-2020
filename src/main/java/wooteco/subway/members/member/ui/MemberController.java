@@ -1,6 +1,7 @@
 package wooteco.subway.members.member.ui;
 
 import java.net.URI;
+import java.util.Objects;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import wooteco.security.core.AuthenticationPrincipal;
+import wooteco.security.web.AuthorizationException;
 import wooteco.subway.members.member.application.MemberService;
 import wooteco.subway.members.member.domain.LoginMember;
 import wooteco.subway.members.member.dto.MemberRequest;
@@ -51,6 +53,9 @@ public class MemberController {
 
     @GetMapping("/members/me")
     public ResponseEntity<MemberResponse> findMemberOfMine(@AuthenticationPrincipal LoginMember loginMember) {
+        if (Objects.isNull(loginMember)) {
+            throw new AuthorizationException();
+        }
         MemberResponse member = memberService.findMember(loginMember.getId());
         return ResponseEntity.ok().body(member);
     }
@@ -58,12 +63,18 @@ public class MemberController {
     @PutMapping("/members/me")
     public ResponseEntity<MemberResponse> updateMemberOfMine(@AuthenticationPrincipal LoginMember loginMember,
         @RequestBody MemberRequest param) {
+        if (Objects.isNull(loginMember)) {
+            throw new AuthorizationException();
+        }
         memberService.updateMember(loginMember.getId(), param);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/members/me")
     public ResponseEntity<MemberResponse> deleteMemberOfMine(@AuthenticationPrincipal LoginMember loginMember) {
+        if (Objects.isNull(loginMember)) {
+            throw new AuthorizationException();
+        }
         memberService.deleteMember(loginMember.getId());
         return ResponseEntity.noContent().build();
     }
