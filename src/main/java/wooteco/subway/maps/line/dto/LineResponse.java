@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import wooteco.subway.maps.line.domain.Line;
+import wooteco.subway.maps.line.domain.line.Line;
 
 public class LineResponse {
     private Long id;

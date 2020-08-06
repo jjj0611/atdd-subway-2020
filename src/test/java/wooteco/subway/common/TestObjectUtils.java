@@ -4,7 +4,7 @@ import java.time.LocalTime;
 
 import org.springframework.test.util.ReflectionTestUtils;
 
-import wooteco.subway.maps.line.domain.Line;
+import wooteco.subway.maps.line.domain.line.Line;
 import wooteco.subway.maps.station.domain.Station;
 
 public class TestObjectUtils {

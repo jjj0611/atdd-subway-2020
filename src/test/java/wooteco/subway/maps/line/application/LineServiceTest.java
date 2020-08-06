@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import wooteco.subway.common.TestObjectUtils;
-import wooteco.subway.maps.line.domain.Line;
+import wooteco.subway.maps.line.domain.line.Line;
 import wooteco.subway.maps.line.domain.LineRepository;
 import wooteco.subway.maps.line.domain.LineStation;
 import wooteco.subway.maps.line.dto.LineResponse;

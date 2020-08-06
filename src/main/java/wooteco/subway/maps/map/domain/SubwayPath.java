@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
-import wooteco.subway.maps.line.domain.Line;
+import wooteco.subway.maps.line.domain.line.Line;
 
 public class SubwayPath {
     private static final int BASIC_PRICE = 1250;

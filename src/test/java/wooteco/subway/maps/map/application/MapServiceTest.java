@@ -18,7 +18,7 @@ import com.google.common.collect.Lists;
 
 import wooteco.subway.common.TestObjectUtils;
 import wooteco.subway.maps.line.application.LineService;
-import wooteco.subway.maps.line.domain.Line;
+import wooteco.subway.maps.line.domain.line.Line;
 import wooteco.subway.maps.line.domain.LineStation;
 import wooteco.subway.maps.map.domain.LineStationEdge;
 import wooteco.subway.maps.map.domain.PathType;

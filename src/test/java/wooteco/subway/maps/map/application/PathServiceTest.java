@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import com.google.common.collect.Lists;
 
 import wooteco.subway.common.TestObjectUtils;
-import wooteco.subway.maps.line.domain.Line;
+import wooteco.subway.maps.line.domain.line.Line;
 import wooteco.subway.maps.line.domain.LineStation;
 import wooteco.subway.maps.map.domain.PathType;
 import wooteco.subway.maps.map.domain.SubwayPath;

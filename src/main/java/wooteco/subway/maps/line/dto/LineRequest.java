@@ -2,7 +2,7 @@ package wooteco.subway.maps.line.dto;
 
 import java.time.LocalTime;
 
-import wooteco.subway.maps.line.domain.Line;
+import wooteco.subway.maps.line.domain.line.Line;
 
 public class LineRequest {
     private String name;

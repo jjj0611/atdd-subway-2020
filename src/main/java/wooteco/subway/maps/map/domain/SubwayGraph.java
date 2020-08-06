@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.jgrapht.graph.WeightedMultigraph;
 
-import wooteco.subway.maps.line.domain.Line;
+import wooteco.subway.maps.line.domain.line.Line;
 import wooteco.subway.maps.line.domain.LineStation;
 
 public class SubwayGraph extends WeightedMultigraph<Long, LineStationEdge> {

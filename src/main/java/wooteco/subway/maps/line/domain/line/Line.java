@@ -1,4 +1,4 @@
-package wooteco.subway.maps.line.domain;
+package wooteco.subway.maps.line.domain.line;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import wooteco.subway.common.domain.BaseEntity;
+import wooteco.subway.maps.line.domain.LineStation;
+import wooteco.subway.maps.line.domain.LineStations;
 
 @Entity
 public class Line extends BaseEntity {
@@ -20,10 +22,11 @@ public class Line extends BaseEntity {
     @Column(unique = true)
     private String name;
     private String color;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private int intervalTime;
-    private int extraFare;
+    @Embedded
+    private LineSchedule lineSchedule;
+    @Embedded
+    private ExtraFare extraFare;
+
     @Embedded
     private LineStations lineStations = new LineStations();
 
@@ -33,17 +36,13 @@ public class Line extends BaseEntity {
     public Line(String name, String color, LocalTime startTime, LocalTime endTime, int intervalTime, int extraFare) {
         this.name = name;
         this.color = color;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.intervalTime = intervalTime;
-        this.extraFare = extraFare;
+        this.lineSchedule = new LineSchedule(startTime, endTime, intervalTime);
+        this.extraFare = new ExtraFare(extraFare);
     }
 
     public void update(Line line) {
         this.name = line.getName();
-        this.startTime = line.getStartTime();
-        this.endTime = line.getEndTime();
-        this.intervalTime = line.getIntervalTime();
+        this.lineSchedule = line.lineSchedule;
         this.color = line.getColor();
     }
 
@@ -72,19 +71,19 @@ public class Line extends BaseEntity {
     }
 
     public LocalTime getStartTime() {
-        return startTime;
+        return lineSchedule.getStartTime();
     }
 
     public LocalTime getEndTime() {
-        return endTime;
+        return lineSchedule.getEndTime();
     }
 
     public int getIntervalTime() {
-        return intervalTime;
+        return lineSchedule.getIntervalTime();
     }
 
     public int getExtraFare() {
-        return extraFare;
+        return extraFare.getExtraFare();
     }
 
     public LineStations getLineStations() {
