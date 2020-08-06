@@ -2,6 +2,8 @@ package wooteco.subway.maps.map.acceptance.step;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +18,17 @@ import wooteco.subway.maps.map.dto.PathResponse;
 import wooteco.subway.maps.station.dto.StationResponse;
 
 public class PathAcceptanceStep {
+    public static ExtractableResponse<Response> 가장_빠른_도착_조회_요청(LocalTime curruntTime, long source, long target) {
+        return RestAssured.given().log().all().
+            accept(MediaType.APPLICATION_JSON_VALUE).
+            when().
+            get("/paths/fastest?source={sourceId}&target={targetId}&currentTime={currentTime}", source, target,
+                curruntTime.format(DateTimeFormatter.ISO_TIME)).
+            then().
+            log().all().
+            extract();
+    }
+
     public static ExtractableResponse<Response> 거리_경로_조회_요청(String type, long source, long target) {
         return RestAssured.given().log().all().
             accept(MediaType.APPLICATION_JSON_VALUE).

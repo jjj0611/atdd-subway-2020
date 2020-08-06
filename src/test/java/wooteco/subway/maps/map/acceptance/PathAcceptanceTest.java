@@ -4,6 +4,8 @@ import static wooteco.subway.maps.line.acceptance.step.LineStationAcceptanceStep
 import static wooteco.subway.maps.map.acceptance.step.PathAcceptanceStep.*;
 import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.*;
 
+import java.time.LocalTime;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -127,8 +129,30 @@ public class PathAcceptanceTest extends AcceptanceTest {
         총_거리와_소요_시간_요금을_함께_응답함(response, 3, 4, 1250);
     }
 
+    @DisplayName("두 역의 가장 빠른 도착 경로를 조회한다.")
+    @Test
+    void findPathFastest() {
+        Long 사호선 = 지하철_노선_스케쥴과_등록되어_있음("4호선", "YELLOW", LocalTime.of(5, 32), LocalTime.of(23, 0), 5);
+        지하철_노선에_지하철역_등록되어_있음(사호선, null, 교대역, 0, 0);
+        지하철_노선에_지하철역_등록되어_있음(사호선, 교대역, 강남역, 1, 2);
+        지하철_노선에_지하철역_등록되어_있음(사호선, 강남역, 양재역, 2, 2);
+        //when
+        ExtractableResponse<Response> response = 가장_빠른_도착_조회_요청(LocalTime.of(5, 30), 1L, 3L);
+
+        //then
+        적절한_경로를_응답(response, Lists.newArrayList(교대역, 남부터미널역, 양재역));
+        총_거리와_소요_시간_요금을_함께_응답함(response, 4, 3, 1250);
+    }
+
     private Long 지하철_노선_등록되어_있음(String name, String color) {
         ExtractableResponse<Response> createLineResponse1 = LineAcceptanceStep.지하철_노선_등록되어_있음(name, color);
+        return createLineResponse1.as(LineResponse.class).getId();
+    }
+
+    private Long 지하철_노선_스케쥴과_등록되어_있음(String name, String color, LocalTime startTime, LocalTime endTime,
+        int intervalTime) {
+        ExtractableResponse<Response> createLineResponse1 = LineAcceptanceStep.지하철_노선_스케쥴과_함께_등록되어_있음(name, color,
+            startTime, endTime, intervalTime);
         return createLineResponse1.as(LineResponse.class).getId();
     }
 

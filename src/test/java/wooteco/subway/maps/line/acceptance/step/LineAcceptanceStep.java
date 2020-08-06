@@ -2,6 +2,7 @@ package wooteco.subway.maps.line.acceptance.step;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -40,6 +41,30 @@ public class LineAcceptanceStep {
             log().all().
             extract();
     }
+
+    public static ExtractableResponse<Response> 지하철_노선_스케쥴과_함께_등록되어_있음(String name, String color, LocalTime startTime, LocalTime endTime, int intervalTime) {
+        return 지하철_노선_스케쥴과_생성_요청(name, color, startTime, endTime, intervalTime);
+    }
+
+    public static ExtractableResponse<Response> 지하철_노선_스케쥴과_생성_요청(String name, String color, LocalTime startTime, LocalTime endTime, int intervalTime) {
+        Map<String, String> params = new HashMap<>();
+        params.put("name", name);
+        params.put("color", color);
+        params.put("startTime", startTime.format(DateTimeFormatter.ISO_TIME));
+        params.put("endTime", endTime.format(DateTimeFormatter.ISO_TIME));
+        params.put("intervalTime", intervalTime + "");
+        params.put("extraFare", "0");
+
+        return RestAssured.given().log().all().
+            contentType(MediaType.APPLICATION_JSON_VALUE).
+            body(params).
+            when().
+            post("/lines").
+            then().
+            log().all().
+            extract();
+    }
+
 
     public static ExtractableResponse<Response> 지하철_노선_목록_조회_요청() {
         return RestAssured.given().log().all().
