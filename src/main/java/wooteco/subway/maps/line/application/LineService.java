@@ -28,7 +28,8 @@ public class LineService {
     }
 
     public Line saveLine(LineRequest request) {
-        return lineRepository.save(request.toLine());
+        Line line = request.toLine();
+        return lineRepository.save(line);
     }
 
     public List<Line> findLines() {

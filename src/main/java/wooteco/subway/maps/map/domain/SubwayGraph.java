@@ -32,9 +32,23 @@ public class SubwayGraph extends WeightedMultigraph<Long, LineStationEdge> {
         }
     }
 
+    public void addEdgeWithoutWeight(List<Line> lines) {
+        // 지하철 역의 연결 정보(간선)을 등록
+        for (Line line : lines) {
+            line.getStationInOrder().stream()
+                .filter(it -> it.getPreStationId() != null)
+                .forEach(it -> addEdgeWithoutWeight(it, line));
+        }
+    }
+
     private void addEdge(PathType type, LineStation lineStation, Line line) {
         LineStationEdge lineStationEdge = new LineStationEdge(lineStation, line.getId());
         addEdge(lineStation.getPreStationId(), lineStation.getStationId(), lineStationEdge);
         setEdgeWeight(lineStationEdge, type.findWeightOf(lineStation));
+    }
+
+    private void addEdgeWithoutWeight(LineStation lineStation, Line line) {
+        LineStationEdge lineStationEdge = new LineStationEdge(lineStation, line.getId());
+        addEdge(lineStation.getPreStationId(), lineStation.getStationId(), lineStationEdge);
     }
 }

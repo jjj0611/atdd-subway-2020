@@ -1,5 +1,6 @@
 package wooteco.subway.maps.map.application;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -51,6 +52,17 @@ public class MapService {
     public PathResponse findPath(Long source, Long target, PathType type, LoginMember loginMember) {
         List<Line> lines = lineService.findLines();
         SubwayPath subwayPath = pathService.findPath(lines, source, target, type);
+        Map<Long, Station> stations = stationService.findStationsByIds(subwayPath.extractStationId());
+        if (Objects.isNull(loginMember)) {
+            return PathResponseAssembler.assemble(subwayPath, stations, lines, 20);
+        }
+        return PathResponseAssembler.assemble(subwayPath, stations, lines, loginMember.getAge());
+    }
+
+    @Transactional
+    public PathResponse findPathFastest(Long source, Long target, LocalTime baseTime, LoginMember loginMember) {
+        List<Line> lines = lineService.findLines();
+        SubwayPath subwayPath = pathService.findPathFastest(lines, source, target, baseTime);
         Map<Long, Station> stations = stationService.findStationsByIds(subwayPath.extractStationId());
         if (Objects.isNull(loginMember)) {
             return PathResponseAssembler.assemble(subwayPath, stations, lines, 20);

@@ -140,7 +140,22 @@ public class PathAcceptanceTest extends AcceptanceTest {
         ExtractableResponse<Response> response = 가장_빠른_도착_조회_요청(LocalTime.of(5, 30), 1L, 3L);
 
         //then
-        적절한_경로를_응답(response, Lists.newArrayList(교대역, 남부터미널역, 양재역));
+        적절한_경로를_응답(response, Lists.newArrayList(교대역, 강남역, 양재역));
+        총_거리와_소요_시간_요금을_함께_응답함(response, 3, 3, 1250);
+    }
+
+    @DisplayName("두 역의 가장 빠른 도착 경로를 조회한다.")
+    @Test
+    void findPathFastest2() {
+        Long 사호선 = 지하철_노선_스케쥴과_등록되어_있음("4호선", "YELLOW", LocalTime.of(5, 33), LocalTime.of(23, 0), 5);
+        지하철_노선에_지하철역_등록되어_있음(사호선, null, 교대역, 0, 0);
+        지하철_노선에_지하철역_등록되어_있음(사호선, 교대역, 강남역, 1, 2);
+        지하철_노선에_지하철역_등록되어_있음(사호선, 강남역, 양재역, 2, 1);
+        //when
+        ExtractableResponse<Response> response = 가장_빠른_도착_조회_요청(LocalTime.of(5, 33), 1L, 3L);
+
+        //then
+        적절한_경로를_응답(response, Lists.newArrayList(교대역, 강남역, 양재역));
         총_거리와_소요_시간_요금을_함께_응답함(response, 4, 3, 1250);
     }
 

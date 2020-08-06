@@ -43,12 +43,7 @@ public class MapController {
         } catch (DateTimeParseException e) {
             baseTime = LocalTime.now();
         }
-        List<StationResponse> responses = Arrays.asList(
-            new StationResponse(1L, "교대역", LocalDateTime.now(), LocalDateTime.now()),
-            new StationResponse(4L, "남부터미널역", LocalDateTime.now(), LocalDateTime.now()),
-            new StationResponse(3L, "양재역", LocalDateTime.now(), LocalDateTime.now())
-        );
-        PathResponse pathResponse = new PathResponse(responses, 3, 4, 1250);
+        PathResponse pathResponse = mapService.findPathFastest(source, target, baseTime, loginMember);
         return ResponseEntity.ok(pathResponse);
     }
 
